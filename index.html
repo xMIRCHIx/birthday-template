@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Surprise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .page {
+      display: none;
+      text-align: center;
+      padding: 30px;
+    }
+    .active {
+      display: block;
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    h1, h2, p {
+      margin: 10px 0;
+    }
+    .countdown span {
+      font-size: 2rem;
+      padding: 0 5px;
+      font-weight: bold;
+      border: 2px solid #e91e63;
+      border-radius: 10px;
+      background-color: #fff;
+      color: #e91e63;
+      margin: 0 5px;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 1rem;
+      background: #e91e63;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #c2185b;
+    }
+    .gift-box {
+      width: 100px;
+      height: 100px;
+      background: url('https://cdn-icons-png.flaticon.com/512/2098/2098402.png') no-repeat center/contain;
+      margin: 20px auto;
+      cursor: pointer;
+      animation: bounce 1s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .message-box {
+      padding: 20px;
+      border: 2px dashed #e91e63;
+      background-color: #fff3f7;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="page1" class="page active">
+  <h1>🎉 Countdown to Your Day 🎉</h1>
+  <div class="countdown">
+    <span id="days">0</span> Days
+    <span id="hours">0</span> Hours
+    <span id="minutes">0</span> Minutes
+    <span id="seconds">0</span> Seconds
+  </div>
+</div>
+
+<div id="page2" class="page">
+  <h2>💖 Your Special Day is Almost Here 💖</h2>
+  <p>Just a little more... A small gift for my favorite person ❤️</p>
+  <button onclick="showPage('page3')">For You ➡️</button>
+</div>
+
+<div id="page3" class="page">
+  <h2>🎁 Tap the Box to Reveal</h2>
+  <div class="gift-box" onclick="showPage('page4')"></div>
+</div>
+
+<div id="page4" class="page">
+  <h2>💌 A Message for You</h2>
+  <div class="message-box" onclick="nextMessage()" id="msgBox">
+    You're the reason smiles exist 💖
+  </div>
+  <p style="margin-top: 30px; color: #333; font-weight: 600;">May every wish you make today come true. You deserve the world, and I’ll always be here to remind you of that. Let’s always stay like this… together, forever 🫶</p>
+</div>
+
+<script>
+  const countdownDate = new Date(new Date().getTime() + 10000).getTime();
+  const countdownInterval = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = countdownDate - now;
+
+    if (distance <= 0) {
+      clearInterval(countdownInterval);
+      showPage('page2');
+    } else {
+      document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+      document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000);
+    }
+  }, 1000);
+
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+  }
+
+  const messages = [
+    "You're the reason smiles exist 💖",
+    "You're the best thing that ever happened to me 🥺",
+    "Happy Birthday, My Cutiepie 🎂🎁",
+    "I love you forever and always 💘"
+  ];
+  let msgIndex = 0;
+
+  function nextMessage() {
+    msgIndex = (msgIndex + 1) % messages.length;
+    document.getElementById("msgBox").innerText = messages[msgIndex];
+  }
+</script>
+
+</body>
+</html>
